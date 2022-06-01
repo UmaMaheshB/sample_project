@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		body{
+			background-color:cyan;
+		}
+	</style>
+	<title></title>
+</head>
+<body>
+{% for note in notes %}
+	{% if note == "schedule" %}
+		{% filter upper%}
+		<li style="color:red">{{note}}</li>
+		{% endfilter %}
+	{% else %}
+		<li>{{note|title}}</li>
+	{% endif %}
+{% endfor %}
+{% comment "this is for testing only" %}
+	<footer>this is in development phase</footer>
+{% endcomment %}
+</body>
+</html>
