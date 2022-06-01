@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from note.models import Note
 
 # Create your views here.
 # def helloworld(request):
@@ -24,8 +25,9 @@ from django.http import HttpResponse
 # 	return HttpResponse(html)
 
 def notes(request):
-	notes = ["daily works", "schedule", "meetings details"]
-	return render(request, 'home.html', {"notes": notes})
+	# notes = ["daily works", "schedule", "meetings details"]
+	notes = Note.objects.all()
+	return render(request, 'notes.html', {"notes": notes})
 
 def note_details(request, id):
 	notes = ["daily works", "schedule", "meetings details"]
