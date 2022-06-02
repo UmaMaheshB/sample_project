@@ -2,17 +2,18 @@
 <html>
 <head>
 	<style type="text/css">
-		body{
-			background-color:cyan;
-		}
 	</style>
 	<title></title>
 </head>
 <body>
+<table border="2">
 {% for note in notes %}
-	{{note.title}}
-	{{note.description}}
-	<hr>
+	<tr>
+		<td>{{note.id}}</td>
+		<td><a href="/notes/{{note.id}}">{{note.title}}</a></td>
+		<td>{{note.description}}</td>
+	</tr>
 {% endfor %}
+</table>
 </body>
 </html>
