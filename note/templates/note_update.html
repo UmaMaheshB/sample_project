@@ -4,12 +4,13 @@
 	<title></title>
 </head>
 <body>
-<form method="GET" action="">
+<form method="POST" action="">
 	{% csrf_token %}
-	<input type="text" name="title" placeholder="Enter Title"><br>
+	<input type="text" name="title" placeholder="Enter Title" value="{{note.title}}"><br>
 	<textarea name="description" placeholder="Enter Description">		
+	{{note.description}}
 	</textarea><br>
-	<input type="submit" value="Save">
+	<input type="submit" value="Update">
 </form>
 </body>
 </html>

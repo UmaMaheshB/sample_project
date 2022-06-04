@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from note.models import Note
 from django.views import View
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 # def helloworld(request):
@@ -46,11 +48,32 @@ class AddNote(View):
 # 	else:
 # 		return render(request, 'add_note.html')
 
+@login_required
 def notes(request):
 	# notes = ["daily works", "schedule", "meetings details"]
 	notes = Note.objects.all()
 	return render(request, 'notes.html', {"notes": notes})
 
 def note_details(request, id):
-	note = Note.objects.get(id=id)
+	# note = Note.objects.get(id=id)
+	note = get_object_or_404(Note, id=id)
 	return render(request, 'note_details.html', {"note": note})
+
+def note_delete(request, id):
+	note = get_object_or_404(Note, id=id)
+	note.delete()
+	messages.success(request, "deleted successfully...")
+	return redirect('all_notes')
+
+def note_update(request, id):
+	note = get_object_or_404(Note, id=id)
+	if request.method == "GET":
+		return render(request, 'note_update.html', {"note": note})
+	else:
+		title = request.POST.get("title")
+		description = request.POST.get("description")
+		note.title = title
+		note.description = description
+		note.save()
+		messages.success(request, "record updated successfully")
+		return redirect('all_notes')
