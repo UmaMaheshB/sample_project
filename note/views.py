@@ -4,6 +4,7 @@ from note.models import Note
 from django.views import View
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .forms import *
 
 # Create your views here.
 # def helloworld(request):
@@ -27,16 +28,33 @@ from django.contrib.auth.decorators import login_required
 # 	print(html)
 # 	return HttpResponse(html)
 
+# class AddNote(View):
+# 	def get(self, request):
+# 		return render(request, 'add_note.html')
+
+# 	def post(self, request):
+# 		title = request.POST.get("title")
+# 		description = request.POST.get("description")
+# 		note = Note(title=title, description=description)
+# 		note.save()
+# 		return redirect('all_notes')
+
 class AddNote(View):
 	def get(self, request):
-		return render(request, 'add_note.html')
+		form = NoteModelForm()
+		return render(request, 'add_note.html', {"form": form})
 
 	def post(self, request):
-		title = request.POST.get("title")
-		description = request.POST.get("description")
-		note = Note(title=title, description=description)
-		note.save()
-		return redirect('all_notes')
+		# title = request.POST.get("title")
+		# description = request.POST.get("description")
+		# note = Note(title=title, description=description)
+		# note.save()
+		form_with_data = NoteModelForm(request.POST)
+		if form_with_data.is_valid():
+			form_with_data.save()
+			return redirect('all_notes')
+		else:
+			return HttpResponse("while saving data got errors")
 
 # def add_note(request):
 # 	if request.method == "POST":
@@ -54,6 +72,7 @@ def notes(request):
 	notes = Note.objects.all()
 	return render(request, 'notes.html', {"notes": notes})
 
+@login_required
 def note_details(request, id):
 	# note = Note.objects.get(id=id)
 	note = get_object_or_404(Note, id=id)
@@ -65,6 +84,7 @@ def note_delete(request, id):
 	messages.success(request, "deleted successfully...")
 	return redirect('all_notes')
 
+@login_required
 def note_update(request, id):
 	note = get_object_or_404(Note, id=id)
 	if request.method == "GET":
