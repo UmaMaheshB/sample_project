@@ -69,13 +69,21 @@ class AddNote(View):
 @login_required
 def notes(request):
 	# notes = ["daily works", "schedule", "meetings details"]
+	import pdb;pdb.set_trace()
 	notes = Note.objects.all()
-	return render(request, 'notes.html', {"notes": notes})
+	response = render(request, 'notes.html', {"notes": notes})
+	response.set_cookie("name", "sai kumar")
+	request.session["test_name"] = "testing"
+	return response
 
 @login_required
 def note_details(request, id):
 	# note = Note.objects.get(id=id)
 	note = get_object_or_404(Note, id=id)
+	user_name = request.session["user_name"]
+	name = request.COOKIES
+	print("\n\n\n\n", name)
+	print("\n\n\n\n", user_name)
 	return render(request, 'note_details.html', {"note": note})
 
 def note_delete(request, id):
