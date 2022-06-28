@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'middlewares.AnonymusUserMiddleware'
+    # 'middlewares.AnonymusUserMiddleware'
 ]
 
 ROOT_URLCONF = 'sample_project.urls'

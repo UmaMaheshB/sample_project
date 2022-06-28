@@ -4,7 +4,7 @@
 	<title></title>
 </head>
 <body>
-<form method="POST" action="">
+<form method="PUT" action="{%url 'note_update_store' id=note.id%}">
 	{% csrf_token %}
 	<input type="text" name="title" placeholder="Enter Title" value="{{note.title}}"><br>
 	<textarea name="description" placeholder="Enter Description">		
