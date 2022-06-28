@@ -13,5 +13,4 @@ urlpatterns = [
     path('<int:id>/edit', note_update, name="note_update"), 
     path('<int:id>/update', note_update_store, name="note_update_store"), 
 
-    # path('save/', save_note), 
 ]
